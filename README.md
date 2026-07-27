@@ -1,50 +1,62 @@
-# Welcome to your Expo app 👋
+# ADHD Anchor
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+**ADHD Anchor** is a zero-friction reminder app (built with Expo React Native) designed specifically for people with ADHD and dopamine deficiency. The core philosophy of the app is that the moment between having a thought and capturing it must be exactly zero.
 
-## Get started
+It features a warm, friendly design with original illustrated characters in soft browns, greens, and purples to create a calming and encouraging experience.
 
-1. Install dependencies
+## Features
+
+- **Zero-Friction Voice Capture**: Tap the mic on the home screen widget, speak your thought, and the integrated Claude AI auto-schedules everything for you.
+- **Smart Widgets**:
+  - Voice-to-task capture widget.
+  - Next reminder widget featuring a semantic emoji.
+- **Critical Reminders**: Force notifications with full-screen takeover, vibration, and a smart snooze feature to ensure important tasks are never missed.
+- **Social Connection Tracker**: A dedicated Social tab tracks the days since your last call per contact via your call log, helping you stay in touch with friends and family.
+- **Comprehensive Organization**: 4 main tabs (Reminders, Todo, Social, Guide) for full life management.
+- **RTL Support**: Full RTL Hebrew interface support built-in.
+
+## Installation
+
+1. **Clone the repository** (if not already done):
+
+   ```bash
+   git clone <your-repo-url>
+   cd ADHD-Anchor
+   ```
+
+2. **Install dependencies**:
 
    ```bash
    npm install
    ```
 
-2. Start the app
+3. **Required Permissions Setup (Android First)**:
+   The app requires the following permissions to function correctly:
+   - Microphone (for voice widgets)
+   - `READ_CALL_LOG` (3 months back + self-log from install)
+   - `READ_CONTACTS`
+   - `POST_NOTIFICATIONS`
+   - `SCHEDULE_EXACT_ALARM`
+   - `VIBRATE`
+   - `RECEIVE_BOOT_COMPLETED`
+
+4. **Environment Variables**:
+   _You will need to set up your Claude API keys in an `.env` file (refer to `.env.example` if available)._
+
+## Usage
+
+1. **Start the development server**:
 
    ```bash
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+2. **Run on Android**:
+   Press `a` in the terminal to open the app in an Android emulator, or scan the QR code with the Expo Go app on your physical Android device.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 👤 Built by
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+**Abdul Ghafoor**
+- GitHub: [@jamaghafoor](https://github.com/jamaghafoor)
+- Email: [abdulghafoor1525@gmail.com](mailto:abdulghafoor1525@gmail.com)
+- Portfolio: [https://dummyportfolio.com](https://dummyportfolio.com)

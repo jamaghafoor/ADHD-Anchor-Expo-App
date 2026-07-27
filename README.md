@@ -20,14 +20,14 @@ It features a warm, friendly design with original illustrated characters in soft
 1. **Clone the repository** (if not already done):
 
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/jamaghafoor/ADHD-Anchor-Expo-App
    cd ADHD-Anchor
    ```
 
 2. **Install dependencies**:
 
    ```bash
-   npm install
+   yarn add
    ```
 
 3. **Required Permissions Setup (Android First)**:

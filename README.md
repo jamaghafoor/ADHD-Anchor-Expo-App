@@ -27,7 +27,7 @@ It features a warm, friendly design with original illustrated characters in soft
 2. **Install dependencies**:
 
    ```bash
-   yarn add
+   yarn install
    ```
 
 3. **Required Permissions Setup (Android First)**:

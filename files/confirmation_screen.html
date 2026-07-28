@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>Confirmation Screen</title>
+<style>
+body{margin:0;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#e0ddd8;font-family:-apple-system,sans-serif}
+.pill{border-radius:20px;padding:3px 10px;font-size:11px;cursor:pointer;user-select:none;white-space:nowrap;transition:opacity 0.15s}
+.pill:active{opacity:0.6}
+.pill-day{background:#F5EDE0;border:1px solid #E0D0BC;color:#8B6040}
+.pill-time{background:#E8F5EC;border:1px solid #C8E0D0;color:#2A7A50}
+.pill-type{background:#f0f0f0;border:1px solid #ddd;color:#888}
+.pill-type.force{background:#FFF0E8;border:1px solid #E0A878;color:#B35000}
+.pill-repeat{background:#f0f0f0;border:1px solid #ddd;color:#888}
+.card{background:#fff;border:1px solid #E0D0BC;border-radius:14px;padding:12px 14px;box-shadow:0 1px 6px rgba(0,0,0,0.06);direction:rtl}
+.card-title{font-size:14px;font-weight:600;color:#3D2010;flex:1;text-align:right;cursor:text;border-bottom:1.5px solid transparent}
+.card-title:hover{border-bottom:1.5px solid #C8A870}
+.card-title-input{flex:1;font-size:14px;font-weight:600;color:#3D2010;border:none;border-bottom:1.5px solid #1D9E75;background:transparent;outline:none;padding:2px 0;text-align:right;direction:rtl;width:100%}
+.dismiss{cursor:pointer;color:#ccc;font-size:18px;line-height:1;flex-shrink:0;padding:0 4px}
+.dismiss:hover{color:#999}
+</style>
+</head>
+<body>
+<div style="width:320px;height:580px;border-radius:40px;position:relative;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.25)">
+  <div style="position:absolute;inset:0;background:#E8E4DE;opacity:0.5"></div>
+  <div style="position:absolute;bottom:0;left:0;right:0;height:85%;background:#F5EDE0;border-radius:24px 24px 0 0;box-shadow:0 -4px 30px rgba(0,0,0,0.12);display:flex;flex-direction:column;direction:rtl">
+    <div style="display:flex;justify-content:center;padding:12px 0 0">
+      <div style="width:36px;height:4px;background:#C4A880;border-radius:2px;opacity:0.5"></div>
+    </div>
+    <div style="display:flex;align-items:center;padding:14px 20px 8px">
+      <div style="font-size:16px;font-weight:700;color:#3D2010;flex:1">:AI הבין</div>
+      <span onclick="closeAll()" style="font-size:14px;color:#A08060;font-weight:500;cursor:pointer">ביטול</span>
+    </div>
+    <div id="cards" style="flex:1;overflow-y:auto;padding:0 16px;display:flex;flex-direction:column;gap:10px;padding-bottom:80px"></div>
+    <div style="position:absolute;bottom:0;left:0;right:0;padding:12px 16px 24px;background:#F5EDE0">
+      <button onclick="confirmAll()" style="width:100%;padding:14px;background:#1D9E75;border:none;border-radius:14px;font-size:16px;font-weight:700;color:#fff;cursor:pointer;box-shadow:0 3px 12px rgba(29,158,117,0.35)">אשר הכל ✓</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var REPEATS = ['ללא חזרה','יומי','שבועי','חודשי'];
+var items = [
+  {id:1, title:'לאכול סלט גדול', emoji:'🥗', day:0, hour:21, min:0, type:'regular', repeat:0},
+  {id:2, title:'פגישה עם לקוח',  emoji:'💼', day:1, hour:9,  min:0, type:'regular', repeat:0},
+  {id:3, title:'אימון כושר',     emoji:'🏋️', day:0, hour:18, min:0, type:'force',   repeat:1},
+];
+
+function dayLabel(d){ return d===0?'היום':d===1?'מחר':(d===2?'מחרתיים':'עוד '+d+' ימים'); }
+function timeLabel(h,m){ return (h<10?'0'+h:h)+':'+(m<10?'0'+m:m); }
+function getItem(id){ return items.find(function(i){ return i.id===id; }); }
+
+async function classifyTitle(title, itemId) {
+  try {
+    var res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:20,
+        system:'Return only a single relevant emoji for this reminder. Most specific emoji possible (🥗 for salad, 🥊 for boxing, ✈️ for flight). If no good match return empty string. Reply with ONLY the emoji, nothing else.',
+        messages:[{role:'user', content:title}]
+      })
+    });
+    var data = await res.json();
+    var emoji = (data.content && data.content[0] && data.content[0].text || '').trim();
+    var item = getItem(itemId);
+    if(item) { item.emoji = emoji; render(); }
+  } catch(e) {}
+}
+
+function editTitle(id, el) {
+  var item = getItem(id);
+  var inp = document.createElement('input');
+  inp.type = 'text';
+  inp.value = item.title;
+  inp.className = 'card-title-input';
+  el.replaceWith(inp);
+  inp.focus(); inp.select();
+  inp.addEventListener('blur', function() {
+    if(inp.value.trim()) {
+      item.title = inp.value.trim();
+      item.emoji = '';
+      render();
+      classifyTitle(item.title, item.id);
+    } else { render(); }
+  });
+  inp.addEventListener('keydown', function(e) {
+    if(e.key==='Enter'){ e.preventDefault(); inp.blur(); }
+    if(e.key==='Escape'){ render(); }
+    e.stopPropagation();
+  });
+}
+
+function nextDay(id){ var i=getItem(id); i.day=(i.day+1)%7; render(); }
+function nextHour(id){ var i=getItem(id); i.hour=(i.hour+1)%24; render(); }
+function nextType(id){ var i=getItem(id); i.type=i.type==='regular'?'force':'regular'; render(); }
+function nextRepeat(id){ var i=getItem(id); i.repeat=(i.repeat+1)%REPEATS.length; render(); }
+function removeItem(id){ items=items.filter(function(i){ return i.id!==id; }); render(); }
+function confirmAll(){ alert('✓ '+items.length+' תזכורות נשמרו!'); }
+function closeAll(){ items=[]; render(); }
+
+function render(){
+  var el=document.getElementById('cards');
+  el.innerHTML='';
+  items.forEach(function(item){
+    var card=document.createElement('div');
+    card.className='card';
+    var displayTitle = item.title + (item.emoji ? ' ' + item.emoji : '');
+    card.innerHTML=
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">'+
+        '<span class="dismiss" onclick="removeItem('+item.id+')">✕</span>'+
+        '<div class="card-title" onclick="event.stopPropagation();editTitle('+item.id+',this)">'+displayTitle+'</div>'+
+      '</div>'+
+      '<div style="display:flex;gap:6px;direction:rtl;flex-wrap:wrap">'+
+        '<span class="pill pill-day" onclick="nextDay('+item.id+')">'+dayLabel(item.day)+'</span>'+
+        '<span class="pill pill-time" onclick="nextHour('+item.id+')">'+timeLabel(item.hour,item.min)+'</span>'+
+        '<span class="pill pill-type'+(item.type==='force'?' force':'')+'" onclick="nextType('+item.id+')">'+(item.type==='force'?'🔥 Force':'Regular')+'</span>'+
+        '<span class="pill pill-repeat" onclick="nextRepeat('+item.id+')">'+REPEATS[item.repeat]+'</span>'+
+      '</div>';
+    el.appendChild(card);
+  });
+}
+
+render();
+</script>
+</body></html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Recording Bottom Sheet</title>
+<style>
+@keyframes w1{0%,100%{height:8px}50%{height:38px}}
+@keyframes w2{0%,100%{height:14px}50%{height:48px}}
+@keyframes w3{0%,100%{height:24px}50%{height:52px}}
+@keyframes w4{0%,100%{height:18px}50%{height:42px}}
+@keyframes w5{0%,100%{height:10px}50%{height:36px}}
+body{margin:0;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#e0ddd8;font-family:-apple-system,sans-serif;}
+</style>
+</head>
+<body>
+<div style="width:320px;height:580px;border-radius:40px;position:relative;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.25)">
+  <div style="position:absolute;inset:0;background:#E8E4DE;opacity:0.5"></div>
+  <div style="position:absolute;bottom:0;left:0;right:0;height:72%;background:#F5EDE0;border-radius:24px 24px 0 0;box-shadow:0 -4px 30px rgba(0,0,0,0.12);display:flex;flex-direction:column;direction:rtl">
+    <div style="display:flex;justify-content:center;padding:12px 0 0">
+      <div style="width:36px;height:4px;background:#C4A880;border-radius:2px;opacity:0.5"></div>
+    </div>
+    <span style="position:absolute;top:14px;left:16px;font-size:22px;color:#B070A0;opacity:0.42">✦</span>
+    <span style="position:absolute;top:8px;left:36px;font-size:13px;color:#B070A0;opacity:0.28">✦</span>
+    <span style="position:absolute;top:26px;left:30px;font-size:10px;color:#3DAA65;opacity:0.32">✦</span>
+    <span style="position:absolute;top:20px;left:50px;font-size:8px;color:#B070A0;opacity:0.22">✦</span>
+    <!-- כותרת -->
+    <div style="padding:16px 20px 4px;text-align:right">
+      <div style="font-size:22px;font-weight:800;color:#3D2010;letter-spacing:-0.3px">דבר. נטפל בשאר.</div>
+      <div style="font-size:12px;color:#A08060;margin-top:4px">דבר בחופשיות — ה-AI יסדר הכל</div>
+    </div>
+    <!-- Waveform -->
+    <div style="margin:12px 16px 0;padding:0 8px">
+      <div style="display:flex;align-items:center;height:56px;justify-content:center">
+        <div style="width:4px;border-radius:3px;background:#C8A870;margin:0 2px;opacity:0.5;animation:w5 1.4s ease-in-out infinite"></div>
+        <div style="width:4px;border-radius:3px;background:#C8A870;margin:0 2px;opacity:0.6;animation:w4 1.2s ease-in-out infinite;animation-delay:0.1s"></div>
+        <div style="width:4px;border-radius:3px;background:#1D9E75;margin:0 2px;opacity:0.8;animation:w3 0.9s ease-in-out infinite;animation-delay:0.05s"></div>
+        <div style="width:4px;border-radius:3px;background:#1D9E75;margin:0 2px;opacity:0.95;animation:w2 0.8s ease-in-out infinite;animation-delay:0.15s"></div>
+        <div style="width:4px;border-radius:3px;background:#1D9E75;margin:0 2px;animation:w3 0.75s ease-in-out infinite"></div>
+        <div style="width:4px;border-radius:3px;background:#1D9E75;margin:0 2px;opacity:0.9;animation:w2 0.85s ease-in-out infinite;animation-delay:0.1s"></div>
+        <div style="width:4px;border-radius:3px;background:#1D9E75;margin:0 2px;opacity:0.85;animation:w3 0.95s ease-in-out infinite;animation-delay:0.2s"></div>
+        <div style="width:4px;border-radius:3px;background:#C8A870;margin:0 2px;opacity:0.65;animation:w4 1.1s ease-in-out infinite;animation-delay:0.05s"></div>
+        <div style="width:4px;border-radius:3px;background:#C8A870;margin:0 2px;opacity:0.5;animation:w5 1.3s ease-in-out infinite;animation-delay:0.15s"></div>
+        <div style="width:4px;border-radius:3px;background:#C8A870;margin:0 2px;opacity:0.4;animation:w4 1.5s ease-in-out infinite;animation-delay:0.1s"></div>
+      </div>
+    </div>
+    <!-- תיבת כיתוב -->
+    <div style="margin:12px 16px 0;background:rgba(255,255,255,0.65);border-radius:14px;padding:14px 16px;flex:1;box-shadow:0 1px 4px rgba(0,0,0,0.05);display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="width:7px;height:7px;border-radius:50%;background:#E24B4A;flex-shrink:0"></div>
+        <div style="font-size:12px;color:#B09878;font-weight:500">מקליט...</div>
+      </div>
+      <div style="font-size:15px;font-weight:400;color:#6B4A30;text-align:right;direction:rtl;line-height:1.6;opacity:0.8">
+        לאכול סלט גדול עם אמא...
+      </div>
+    </div>
+    <!-- כפתורים -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 28px 28px">
+      <div style="padding:8px 16px;border:1.5px solid #C8A870;border-radius:20px;cursor:pointer">
+        <span style="font-size:13px;color:#8B6040;font-weight:600">ביטול</span>
+      </div>
+      <div style="width:66px;height:66px;border-radius:50%;background:linear-gradient(145deg,#22B07A,#1A8E60);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(29,158,117,0.45),0 0 0 6px rgba(29,158,117,0.1)">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="6" y="6" width="12" height="12" rx="3" fill="white"/></svg>
+      </div>
+      <div style="width:80px"></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

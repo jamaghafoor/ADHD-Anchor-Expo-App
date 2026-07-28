@@ -59,4 +59,4 @@ It features a warm, friendly design with original illustrated characters in soft
 **Abdul Ghafoor**
 - GitHub: [@jamaghafoor](https://github.com/jamaghafoor)
 - Email: [abdulghafoor1525@gmail.com](mailto:abdulghafoor1525@gmail.com)
-- Portfolio: [https://abdulghafoor.dev/](https://abdulghafoor-portfolio.vercel.app/)
+- Portfolio: [https://abdulghafoor.dev/](https://abdulghafoor.vercel.app/)
